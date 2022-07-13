@@ -58,7 +58,7 @@ export const businessLogic = {
             }
 
             db.messages = [...db.messages, newMessage]
-            return db.messages
+            return newMessage
         }
         else {
             console.log("you are not authorized")
