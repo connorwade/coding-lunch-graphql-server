@@ -1,3 +1,4 @@
+import { businessLogic } from '../db/businessLogic'
 import db from '../db/db.json'
 
 const resolvers = {
@@ -18,6 +19,10 @@ const resolvers = {
 
         messages: async() => {
             return db.messages
+        },
+
+        me: async() => {
+            return await businessLogic.me()
         }
 
     },
@@ -26,49 +31,18 @@ const resolvers = {
         addUser: async (_, req) => {
             const {handle, email, password} = req;
             
-            for(const user of db.users) {
-                if(user.handle === handle) {
-                    console.log('User already exists by that name')
-                    return;
-                } else if (user.email === email) {
-                    console.log("You've already signed up with that password");
-                    return;
-                }
-            }
-
-            //Encrypt the password here!!!
-
-            let newUser = {
-                handle: handle,
-                email: email,
-                password: password,
-                user_id: (db.users.length + 1).toString()
-            }
-
-            db.users = [...db.users, newUser]
-
-            return newUser
+            return await businessLogic.signUp(handle, email, password);
         },
 
-        addMessage: async (parent, { content, user_id}, ctx) => {
-            let sender
-            for(let user of db.users) {
-                sender = user.user_id === user_id ? user : undefined
-            }
-            if(!sender) {
-                console.log("No user exists by that id")
-                return;
-            }
-
-            const newMessage = {
-                content: content,
-                user: sender
-            }
-
-            db.messages = [...db.messages, newMessage]
-            
-            return newMessage
+        addMessage: async (parent, { content }, ctx) => {
+            return await businessLogic.addMessage(content)
         },
+
+        login: async (_, req) => {
+            const {handle, email, password} = req;
+
+            return await businessLogic.login(handle, email, password);
+        }
     }
 }
 
