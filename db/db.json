@@ -4,13 +4,24 @@
             "handle": "cookiecrisp",
             "email": "cookiecrispcereal@gmail.com",
             "password": "123password123",
-            "user_id": 1
+            "user_id": "1"
         },
         {
             "handle": "cjthemovie",
             "email": "cjthemovie@gmail.com",
             "password": "456password456",
-            "user_id": 2
+            "user_id": "2"
+        }
+    ],
+    "messages": [
+        {
+            "content": "Hello smithers",
+            "user": {
+                "handle": "cookiecrisp",
+                "email": "cookiecrispcereal@gmail.com",
+                "password": "123password123",
+                "user_id": "1"
+            }
         }
     ]
 }
